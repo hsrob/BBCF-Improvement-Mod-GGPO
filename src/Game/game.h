@@ -6,7 +6,8 @@
 #include <ggponet.h>
 #include <memory>
 #include <array>
-
+#include <vector>
+#include <list>
 #include "../../include/containers.h"
 #include "../../include/logger.h"
 
@@ -268,6 +269,7 @@ namespace pointer_offsets {
         static const std::array<unsigned int, 1> health = { 0x9D4 };
         static const std::array<unsigned int, 1> xpos   = { 0x268 };
         static const std::array<unsigned int, 1> ypos   = { 0x26C };
+        static const std::array<unsigned int, 1> currentEffect = { 0x22C };
     }
 }
 
@@ -336,7 +338,13 @@ static SavedGameState SaveGameState()
     auto p1_dref = *p1_ref;
     auto p2_ref= (uintptr_t*)(base + pointer_offsets::player2);
     auto p2_dref = *p2_ref;
-    logGameState((uintptr_t*)(base + pointer_offsets::time),p1_ref,p2_ref);
+
+    auto p1_effect = (uintptr_t*)(p1_dref + pointer_offsets::player_common::currentEffect[0]);
+    auto p1_effectdref = *p1_effect;
+    auto p2_effect = (uintptr_t*)(p2_dref + pointer_offsets::player_common::currentEffect[0]);
+    auto p2_effectdref = *p2_effect;
+    std::vector<uintptr_t*> effect_list = { p1_effect,p2_effect };
+    logGameState((uintptr_t*)(base + pointer_offsets::time), p1_ref, p2_ref, effect_list);
     std::memcpy(gP1Data->data(), (unsigned char*)(p1_dref), 0x214C4);
     std::memcpy(gP2Data->data(), (unsigned char*)(p2_dref), 0x214C4);
     return game_state;

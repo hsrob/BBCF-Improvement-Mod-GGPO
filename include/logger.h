@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-
+#include <vector>
 //#define RELEASE_VER
 
 #ifndef RELEASE_VER
@@ -11,7 +11,7 @@ if (DEBUG_LEVEL >= _level) { logger(_str, __VA_ARGS__); }}
 #endif
 
 inline void logger(const char* message, ...);
-void logGameState(uintptr_t* time, uintptr_t* p1, uintptr_t* p2, uintptr_t* objectData[] = {});
+void logGameState(uintptr_t* time, uintptr_t* p1, uintptr_t* p2, std::vector<uintptr_t*> objectData = {});
 void openLogger();
 void closeLogger();
 //free it after usage!!
