@@ -50,10 +50,10 @@ void logGameState(uintptr_t* time, uintptr_t* p1, uintptr_t* p2, std::vector<uin
 	fprintf(g_oFile, ("P2 Address: " + uint_to_hex((unsigned int)p2) + " Value: " + uint_to_hex(*p2) + "\n").c_str());
 	for (uintptr_t* e: objectData) {
 		if (strcmp(uint_to_hex((unsigned int)objectData[0]).c_str(), uint_to_hex((unsigned int)e).c_str())==0) {
-			fprintf(g_oFile, ("HELLO PLayer 1 " + uint_to_hex((unsigned int)e) + "\n").c_str());
+			fprintf(g_oFile, ("PLayer 1 Effect Addr: " + uint_to_hex((unsigned int)e) + "Value: " + uint_to_hex(*e) + "\n").c_str());
 		}
 		else if (strcmp(uint_to_hex((unsigned int)objectData[1]).c_str(), uint_to_hex((unsigned int)e).c_str())==0) {
-			fprintf(g_oFile, ("HELLO PLayer 2 " + uint_to_hex((unsigned int)e)+"\n").c_str());
+			fprintf(g_oFile, ("PLayer 2 Effect Addr: " + uint_to_hex((unsigned int)e)+ "Value: "+ uint_to_hex(*e)+"\n").c_str());
 		}
 	}
 	//fprintf(g_oFile, ("P2 Address: " + uint_to_hex((unsigned int)objectData[i]) + " Value: " + uint_to_hex(*objectData[0]) + "\n").c_str());
