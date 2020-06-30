@@ -302,8 +302,8 @@ void InitGameStatePointers();
 
 extern std::unique_ptr<std::array<unsigned char, 0x214C4 >> gP1Data;
 extern std::unique_ptr<std::array<unsigned char, 0x214C4 >> gP2Data;
-extern std::unique_ptr<std::array<unsigned char, 0x129C >> gP1Effect;
-extern std::unique_ptr<std::array<unsigned char, 0x129C >> gP2Effect;
+extern std::unique_ptr<std::array<unsigned char, 0x220C >> gP1Effect;
+extern std::unique_ptr<std::array<unsigned char, 0x220C >> gP2Effect;
 
 typedef struct SavedGameState {
 
@@ -351,8 +351,8 @@ static SavedGameState SaveGameState()
 
     std::memcpy(gP1Data->data(), (unsigned char*)(p1_dref), 0x214C4);
     std::memcpy(gP2Data->data(), (unsigned char*)(p2_dref), 0x214C4);
-    std::memcpy(gP1Effect->data(), (unsigned char*)(p1_effectdref), 0x129C);
-    std::memcpy(gP2Effect->data(), (unsigned char*)(p2_effectdref), 0x129C);
+    std::memcpy(gP1Effect->data(), (unsigned char*)(p1_effectdref), 0x220C);
+    std::memcpy(gP2Effect->data(), (unsigned char*)(p2_effectdref), 0x220C);
     return game_state;
 }
 
@@ -380,8 +380,8 @@ static void LoadGameState(SavedGameState const& game_state)
 
     std::memcpy((unsigned char*)p1_dref, gP1Data->data(), 0x214C4);
     std::memcpy((unsigned char*)p2_dref, gP2Data->data(), 0x214C4);
-    std::memcpy((unsigned char*)(p1_effectdref), gP1Effect->data(), 0x129C);
-    std::memcpy((unsigned char*)(p2_effectdref), gP2Effect->data(), 0x129C);
+    std::memcpy((unsigned char*)(p1_effectdref), gP1Effect->data(), 0x220C);
+    std::memcpy((unsigned char*)(p2_effectdref), gP2Effect->data(), 0x220C);
 }
 
 /*
