@@ -3,11 +3,12 @@
 namespace game {
 
 using CharData = std::array<unsigned char, 0x214C4 >;
-using ObjData = std::array<unsigned char, 0x214C4 >;
+using ObjData = std::array<unsigned char, 0x220C >;
 std::unique_ptr<GameState> gGameState;
 std::unique_ptr<CharData> gP1Data;
 std::unique_ptr<CharData> gP2Data;
-
+std::unique_ptr<ObjData> gP1Effect;
+std::unique_ptr<ObjData> gP2Effect;
 /// <summary>
 /// Gets the pointer data pointers in BBCF's memory, so we can access and write to them later for
 /// saving and loading state
@@ -52,6 +53,8 @@ void InitGameStatePointers()
     gGameState = std::make_unique<GameState>();
     gP1Data = std::make_unique<CharData>();
     gP2Data = std::make_unique<CharData>();
+    gP1Effect = std::make_unique<ObjData>();
+    gP2Effect = std::make_unique<ObjData>();
 
     auto get_address_or_log = [](std::string const& name, uintptr_t base, auto offsets) {
         uintptr_t addr = FindAddress(base, offsets);

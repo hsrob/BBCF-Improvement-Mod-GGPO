@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-
+#include <vector>
 //#define RELEASE_VER
 
 #ifndef RELEASE_VER

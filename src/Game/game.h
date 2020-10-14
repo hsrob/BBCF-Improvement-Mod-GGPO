@@ -6,7 +6,8 @@
 #include <ggponet.h>
 #include <memory>
 #include <array>
-
+#include <vector>
+#include <list>
 #include "../../include/containers.h"
 #include "../../include/logger.h"
 
@@ -270,6 +271,7 @@ namespace pointer_offsets {
         static const std::array<unsigned int, 1> health = { 0x9D4 };
         static const std::array<unsigned int, 1> xpos   = { 0x268 };
         static const std::array<unsigned int, 1> ypos   = { 0x26C };
+        static const std::array<unsigned int, 1> currentEffect = { 0x22C };
     }
 }
 
@@ -306,6 +308,8 @@ void InitGameStatePointers();
 
 extern std::unique_ptr<std::array<unsigned char, 0x214C4 >> gP1Data;
 extern std::unique_ptr<std::array<unsigned char, 0x214C4 >> gP2Data;
+extern std::unique_ptr<std::array<unsigned char, 0x220C >> gP1Effect;
+extern std::unique_ptr<std::array<unsigned char, 0x220C >> gP2Effect;
 
 typedef struct SavedGameState {
 
@@ -353,8 +357,18 @@ static SavedGameState SaveGameState()
     auto Xscreen_scroll_2_ref = (uintptr_t*)(base + pointer_offsets::XscreenScroll);
     auto Yscreen_scroll_2_ref = (uintptr_t*)(base + pointer_offsets::YscreenScroll);
     logGameState((uintptr_t*)(base + pointer_offsets::time),p1_ref,p2_ref,Xscreen_scroll_2_ref,Yscreen_scroll_2_ref);
+    auto p1_effect = (uintptr_t*)(p1_dref + pointer_offsets::player_common::currentEffect[0]);
+    auto p1_effectdref = *p1_effect;
+    auto p2_effect = (uintptr_t*)(p2_dref + pointer_offsets::player_common::currentEffect[0]);
+    auto p2_effectdref = *p2_effect;
+
+    std::vector<uintptr_t*> effect_list = { p1_effect,p2_effect };
+    logGameState((uintptr_t*)(base + pointer_offsets::time), p1_ref, p2_ref, effect_list);
+
     std::memcpy(gP1Data->data(), (unsigned char*)(p1_dref), 0x214C4);
     std::memcpy(gP2Data->data(), (unsigned char*)(p2_dref), 0x214C4);
+    std::memcpy(gP1Effect->data(), (unsigned char*)(p1_effectdref), 0x220C);
+    std::memcpy(gP2Effect->data(), (unsigned char*)(p2_effectdref), 0x220C);
     return game_state;
 }
 
@@ -378,9 +392,15 @@ static void LoadGameState(SavedGameState const& game_state)
     auto p1_dref = *(uintptr_t*)(base + pointer_offsets::player1);
     auto p2_dref = *(uintptr_t*)(base + pointer_offsets::player2);
 
+    auto p1_effect = (uintptr_t*)(p1_dref + pointer_offsets::player_common::currentEffect[0]);
+    auto p1_effectdref = *p1_effect;
+    auto p2_effect = (uintptr_t*)(p2_dref + pointer_offsets::player_common::currentEffect[0]);
+    auto p2_effectdref = *p2_effect;
+
     std::memcpy((unsigned char*)p1_dref, gP1Data->data(), 0x214C4);
     std::memcpy((unsigned char*)p2_dref, gP2Data->data(), 0x214C4);
-
+    std::memcpy((unsigned char*)(p1_effectdref), gP1Effect->data(), 0x220C);
+    std::memcpy((unsigned char*)(p2_effectdref), gP2Effect->data(), 0x220C);
 }
 
 /*
