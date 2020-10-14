@@ -1,4 +1,5 @@
 #include "game.h"
+#include "../../include/logger.h"
 
 namespace game {
 
@@ -75,8 +76,9 @@ void InitGameStatePointers()
 
     GetPlayerPointers(base + pointer_offsets::player1, gGameState->player1, "Player 1");
     GetPlayerPointers(base + pointer_offsets::player2, gGameState->player2, "Player 2");
+    logPlayerPointers(base + pointer_offsets::player1, gGameState->player1, "Player 1");
+    logPlayerPointers(base + pointer_offsets::player2, gGameState->player2, "Player 2");
 }
-
 }
 
 //Hold off on working on this page for now

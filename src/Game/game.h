@@ -356,14 +356,12 @@ static SavedGameState SaveGameState()
 
     auto Xscreen_scroll_2_ref = (uintptr_t*)(base + pointer_offsets::XscreenScroll);
     auto Yscreen_scroll_2_ref = (uintptr_t*)(base + pointer_offsets::YscreenScroll);
-    logGameState((uintptr_t*)(base + pointer_offsets::time),p1_ref,p2_ref,Xscreen_scroll_2_ref,Yscreen_scroll_2_ref);
     auto p1_effect = (uintptr_t*)(p1_dref + pointer_offsets::player_common::currentEffect[0]);
     auto p1_effectdref = *p1_effect;
     auto p2_effect = (uintptr_t*)(p2_dref + pointer_offsets::player_common::currentEffect[0]);
     auto p2_effectdref = *p2_effect;
 
-    std::vector<uintptr_t*> effect_list = { p1_effect,p2_effect };
-    logGameState((uintptr_t*)(base + pointer_offsets::time), p1_ref, p2_ref, effect_list);
+    logGameState((uintptr_t*)(base + pointer_offsets::time), p1_ref, p2_ref, Xscreen_scroll_2_ref, Yscreen_scroll_2_ref, p1_effect, p2_effect);
 
     std::memcpy(gP1Data->data(), (unsigned char*)(p1_dref), 0x214C4);
     std::memcpy(gP2Data->data(), (unsigned char*)(p2_dref), 0x214C4);

@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "../src/Game/game.h";
 #include <vector>
 //#define RELEASE_VER
 
@@ -11,7 +12,8 @@ if (DEBUG_LEVEL >= _level) { logger(_str, __VA_ARGS__); }}
 #endif
 
 inline void logger(const char* message, ...);
-void logGameState(uintptr_t* time, uintptr_t* p1, uintptr_t* p2, uintptr_t* XScreenScroll, uintptr_t* YScreenScroll, uintptr_t* objectData[] = {});
+void logGameState(uintptr_t* time, uintptr_t* p1, uintptr_t* p2, uintptr_t* XScreenScroll, uintptr_t* YScreenScroll, uintptr_t* p1Effect, uintptr_t* p2Effect);
+void logPlayerPointers(uintptr_t base, game::PlayerData& player_data, std::string const& player);
 void openLogger();
 void closeLogger();
 //free it after usage!!

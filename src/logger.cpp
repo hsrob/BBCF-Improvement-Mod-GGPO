@@ -44,23 +44,24 @@ std::string uint_to_hex(unsigned int i)
 	return stream.str();
 }
 //void logGameState(uintptr_t* time, uintptr_t* p1, uintptr_t* p2, std::vector<uintptr_t*> objectData )
-void logGameState(uintptr_t* time, uintptr_t* p1, uintptr_t* p2, uintptr_t* XScreenScroll, uintptr_t* YScreenScroll, uintptr_t* objectData[])
+void logGameState(uintptr_t* time, uintptr_t* p1, uintptr_t* p2, uintptr_t* XScreenScroll, uintptr_t* YScreenScroll, uintptr_t* p1Effect, uintptr_t* p2Effect)
 {
 	fprintf(g_oFile, ("Time Address: "+uint_to_hex((unsigned int)time) + " Value: "+ std::to_string(*time) +"\n").c_str());
 	fprintf(g_oFile, ("P1 Address: " + uint_to_hex((unsigned int)p1) + " Value: " + uint_to_hex(*p1) + "\n").c_str());
 	fprintf(g_oFile, ("P2 Address: " + uint_to_hex((unsigned int)p2) + " Value: " + uint_to_hex(*p2) + "\n").c_str());
 	fprintf(g_oFile, ("X Screen Scroll 2 Address: " + uint_to_hex((unsigned int)XScreenScroll) + " Value: " + std::to_string(*XScreenScroll) + "\n").c_str());
 	fprintf(g_oFile, ("Y Screen Scroll 2 Address: " + uint_to_hex((unsigned int)YScreenScroll) + " Value: " + std::to_string(*YScreenScroll) + "\n").c_str());
-	for (uintptr_t* e: objectData) {
-		if (strcmp(uint_to_hex((unsigned int)objectData[0]).c_str(), uint_to_hex((unsigned int)e).c_str())==0) {
-			fprintf(g_oFile, ("PLayer 1 Effect Addr: " + uint_to_hex((unsigned int)e) + "Value: " + uint_to_hex(*e) + "\n").c_str());
-		}
-		else if (strcmp(uint_to_hex((unsigned int)objectData[1]).c_str(), uint_to_hex((unsigned int)e).c_str())==0) {
-			fprintf(g_oFile, ("PLayer 2 Effect Addr: " + uint_to_hex((unsigned int)e)+ "Value: "+ uint_to_hex(*e)+"\n").c_str());
-		}
-	}
-	//fprintf(g_oFile, ("P2 Address: " + uint_to_hex((unsigned int)objectData[i]) + " Value: " + uint_to_hex(*objectData[0]) + "\n").c_str());
+	fprintf(g_oFile, ("Player 1 Effect Addr: " + uint_to_hex((unsigned int)p1Effect) + " Value: " + uint_to_hex(*p1Effect) + "\n").c_str());
+	fprintf(g_oFile, ("Player 2 Effect Addr: " + uint_to_hex((unsigned int)p2Effect) + " Value: " + uint_to_hex(*p2Effect) + "\n").c_str());
 	fflush(g_oFile);
+}
+
+void logPlayerPointers(uintptr_t base, game::PlayerData& player_data, std::string const& player)
+{
+	fprintf(g_oFile, (player + " Health: " + std::to_string(*player_data.health) 
+		+ " XPos: " + std::to_string(*player_data.x_pos)
+		+ " YPos: " + std::to_string(*player_data.y_pos)
+		+ "\n").c_str());
 }
 
 
