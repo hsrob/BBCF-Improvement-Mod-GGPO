@@ -331,7 +331,7 @@ typedef struct SavedGameState {
 
 static SavedGameState SaveGameState()
 {
-    SavedGameState game_state;
+    SavedGameState game_state{};
 
     if (gGameState) {
         game_state.time = *gGameState->time;
