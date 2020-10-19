@@ -45,6 +45,78 @@ static void GetPlayerPointers(uintptr_t base, PlayerData& player_data, std::stri
         base,
         pointer_offsets::player_common::ypos
     );
+
+	player_data.effect = (int*)get_address_or_log(
+        player + " effect",
+        base,
+        pointer_offsets::player_common::effect
+    );
+	
+	player_data.heat = (int*)get_address_or_log(
+        player + " heat",
+        base,
+        pointer_offsets::player_common::heat
+    );
+	
+	player_data.barrier = (int*)get_address_or_log(
+        player + " barrier",
+        base,
+        pointer_offsets::player_common::barrier
+    );
+	
+	player_data.danger = (int*)get_address_or_log(
+        player + " danger",
+        base,
+        pointer_offsets::player_common::danger
+    );
+	
+	player_data.burst = (int*)get_address_or_log(
+        player + " burst",
+        base,
+        pointer_offsets::player_common::burst
+    );
+	
+	player_data.activeFlow = (int*)get_address_or_log(
+        player + " activeFlow",
+        base,
+        pointer_offsets::player_common::activeFlow
+    );
+	
+	player_data.overdriveTime = (int*)get_address_or_log(
+        player + " overdriveTime",
+        base,
+        pointer_offsets::player_common::overdriveTime
+    );
+	
+	player_data.damageScaling = (int*)get_address_or_log(
+        player + " damageScaling",
+        base,
+        pointer_offsets::player_common::damageScaling
+    );
+	
+	player_data.objectLifetime = (int*)get_address_or_log(
+        player + " objectLifetime",
+        base,
+        pointer_offsets::player_common::objectLifetime
+    );
+	
+	player_data.objectDestroyTime = (int*)get_address_or_log(
+        player + " objectDestroyTime",
+        base,
+        pointer_offsets::player_common::objectDestroyTime
+    );
+	
+	player_data.sprite = (int*)get_address_or_log(
+        player + " sprite",
+        base,
+        pointer_offsets::player_common::sprite
+    );
+	
+	player_data.spriteState = (std::string*)get_address_or_log(
+        player + " spriteState",
+        base,
+        pointer_offsets::player_common::spriteState
+    );
 }
 
 void InitGameStatePointers()
