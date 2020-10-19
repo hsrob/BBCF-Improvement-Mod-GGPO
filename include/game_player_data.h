@@ -54,7 +54,7 @@ typedef struct GameState {
 
 typedef struct SavedGameState {
 
-    struct Player {
+    struct SavedPlayerData {
         int health;
         int x_pos;
         int y_pos;
@@ -77,7 +77,7 @@ typedef struct SavedGameState {
     int XscreenScroll2;
     int YscreenScroll1;
     int YscreenScroll2;
-    Player p1;
-    Player p2;
+    SavedPlayerData player1;
+    SavedPlayerData player2;
 
 } SavedGameState;

@@ -17,6 +17,7 @@
 #include "../../include/bbcf_im_networking.h"
 #include "../../include/internal_palette_datas.h"
 #include "../../src/Game/game.h"
+#include "../../include/game_player_data.h"
 #include "../../include/logger.h"
 
 // reminder to myself, pitfall of using imgui in your project:
@@ -293,7 +294,7 @@ void ImGuiSystem::HandleImGuiWindows()
 		io.DisplaySize = ImVec2(1280, 768);
 	}
 
-	static game::SavedGameState game_state;
+	static SavedGameState game_state;
 	if (ImGui::IsKeyPressed(119, false)) { // F8
 		game_state = game::SaveGameState();
 	}
@@ -620,7 +621,7 @@ void ImGuiSystem::ShowSaveLoadStateWindow(bool* p_open)
 	if (*Containers::gameVals.pGameState != GAME_STATE_IN_MATCH)
 		return;
 
-	static game::SavedGameState savedState;
+	static SavedGameState savedState;
 	static int nFramesToSkipRender = 0;
 	static int nMinSkip = 0;
 	static int nMaxSkip = 60;

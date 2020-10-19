@@ -289,13 +289,13 @@ static SavedGameState SaveGameState()
         game_state.YscreenScroll2 = *gGameState->YscreenScroll2;
         // TODO: Load other values from PlayerData for each character (B 2020-10-19)
         /*
-        game_state.p1.health = *gGameState->player1.health;
-        game_state.p1.x_pos = *gGameState->player1.x_pos;
-        game_state.p1.y_pos = *gGameState->player1.y_pos;
+        game_state.player1.health = *gGameState->player1.health;
+        game_state.player1.x_pos = *gGameState->player1.x_pos;
+        game_state.player1.y_pos = *gGameState->player1.y_pos;
 
-        game_state.p2.health = *gGameState->player2.health;
-        game_state.p2.x_pos = *gGameState->player2.x_pos;
-        game_state.p2.y_pos = *gGameState->player2.y_pos;*/
+        game_state.player2.health = *gGameState->player2.health;
+        game_state.player2.x_pos = *gGameState->player2.x_pos;
+        game_state.player2.y_pos = *gGameState->player2.y_pos;*/
     }
     
     auto base = (uintptr_t)Containers::gameProc.hBBCFGameModule;
@@ -320,13 +320,13 @@ static void LoadGameState(SavedGameState const& game_state)
         *gGameState->XscreenScroll2 = game_state.XscreenScroll2;
         *gGameState->YscreenScroll2 = game_state.YscreenScroll2;
 
-        /**gGameState->player1.health = game_state.p1.health;
-        *gGameState->player1.x_pos = game_state.p1.x_pos;
-        *gGameState->player1.y_pos = game_state.p1.y_pos;
+        /**gGameState->player1.health = game_state.player1.health;
+        *gGameState->player1.x_pos = game_state.player1.x_pos;
+        *gGameState->player1.y_pos = game_state.player1.y_pos;
 
-        *gGameState->player2.health = game_state.p2.health;
-        *gGameState->player2.x_pos = game_state.p2.x_pos;
-        *gGameState->player2.y_pos = game_state.p2.y_pos;*/
+        *gGameState->player2.health = game_state.player2.health;
+        *gGameState->player2.x_pos = game_state.player2.x_pos;
+        *gGameState->player2.y_pos = game_state.player2.y_pos;*/
     }
     auto base = (uintptr_t)Containers::gameProc.hBBCFGameModule;
 
