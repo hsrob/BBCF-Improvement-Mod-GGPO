@@ -863,9 +863,9 @@ void ImGuiSystem::ShowGGPONetplayMenu()
 	if (*Containers::gameVals.pGameMode == GAME_MODE_ONLINE || *Containers::gameVals.pGameMode == GAME_STATE_LOBBY)
 	{
 		logger("Opened GGPO Netplay Menu");
-		ImGui::Button("Host/Join"); ImGui::SameLine(); ImGui::TextDisabled("CANNOUT USE DURING ONLINE MODES");
+		ImGui::Button("Host/Join"); ImGui::SameLine(); ImGui::TextDisabled("CANNOT USE DURING ONLINE MODES");
 
-		ImGui::Button("Spectate"); ImGui::SameLine(); ImGui::TextDisabled("CANNOUT USE DURING ONLINE MODES");
+		ImGui::Button("Spectate"); ImGui::SameLine(); ImGui::TextDisabled("CANNOT USE DURING ONLINE MODES");
 	}
 	else
 	{

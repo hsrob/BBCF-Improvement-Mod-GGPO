@@ -92,7 +92,9 @@ typedef enum PlayerDataAllowedNormals {
     NORMAL_J6B =
     NORMAL_J2C =
     NORMAL_J5C =
+    NORMAL_J1D =
     NORMAL_J2D =
+    NORMAL_J3D =
     NORMAL_J4D =
     NORMAL_J5D =
     NORMAL_J6D =
@@ -114,9 +116,20 @@ typedef struct PlayerData {
     */
 
     int* health;
-
     int* x_pos;
     int* y_pos;
+    int* effect;
+    int* heat;
+    int* barrier;
+    int* danger;
+    int* burst;
+    int* activeFlow;
+    int* overdriveTime;
+    int* damageScaling;
+    int* objectLifetime;
+    int* objectDestroyTime;
+    int* sprite;
+    std::string* spriteState;
 
     //enum PlayerDataAllowedNormals allowedNormals;
 
@@ -278,6 +291,8 @@ namespace pointer_offsets {
         static const std::array<unsigned int, 1> activeFlow = { 0x200D8 };
         static const std::array<unsigned int, 1> overdriveTime = { 0x1C0 };
         static const std::array<unsigned int, 1> damageScaling = { 0x1F0 };
+        static const std::array<unsigned int, 1> objectLifetime = { 0x160 };
+        static const std::array<unsigned int, 1> objectDestroyTime = { 0x16F8 };
         static const std::array<unsigned int, 1> sprite = { 0xD8 };
         // string version of `sprite`? ex. iz000_00.bmp Izayoi neutral sprite (hsrob 2020-10-19)
         static const std::array<unsigned int, 1> spriteState = { 0xD8 };
