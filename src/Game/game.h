@@ -9,6 +9,7 @@
 
 #include "../../include/containers.h"
 #include "../../include/logger.h"
+#include "../../include/game_player_data.h"
 
 namespace game {
 
@@ -105,35 +106,6 @@ typedef enum PlayerDataAllowedNormals {
 } PlayerDataAllowedNormals;
 */
 
-typedef struct GameObjectData GameObjectData;
-typedef struct SavedGameState SavedGameState;
-
-typedef struct PlayerData {
-
-    /*
-    Here we will need to put in stuff related to characters, ranging
-    from current heat to character specific stuff (i.e Susan seals)
-    */
-
-    int* health;
-    int* x_pos;
-    int* y_pos;
-    int* effect;
-    int* heat;
-    int* barrier;
-    int* danger;
-    int* burst;
-    int* activeFlow;
-    int* overdriveTime;
-    int* damageScaling;
-    int* objectLifetime;
-    int* objectDestroyTime;
-    int* sprite;
-    std::string* spriteState;
-
-    //enum PlayerDataAllowedNormals allowedNormals;
-
-} PlayerData;
 
 /*
 struct RandomNumberGenerator {
@@ -299,33 +271,6 @@ namespace pointer_offsets {
     }
 }
 
-typedef struct GameState {
-
-    //int nFramesToSkipRender;
-    //int nFramesSkipped;
-    //int lastSecondNumFramesSimulated;
-
-   //GGPOState ggpoState;
-   //SessionInitiationState sessionInitState;
-
-   //Struct definitons for GameObjectData
-
-   //Camera values
-
-   int* time;
-   int* XscreenScroll1;
-   int* XscreenScroll2;
-   int* YscreenScroll1;
-   int* YscreenScroll2;
-   PlayerData player1;
-   PlayerData player2;
-
-   //Will update this more as I get a clearer idea on what exactly we'll need
-
- 
-
-} GameState;
-
 extern std::unique_ptr<GameState> gGameState;
 
 void InitGameStatePointers();
@@ -333,23 +278,6 @@ void InitGameStatePointers();
 extern std::unique_ptr<std::array<unsigned char, 0x214C4 >> gP1Data;
 extern std::unique_ptr<std::array<unsigned char, 0x214C4 >> gP2Data;
 
-typedef struct SavedGameState {
-
-    struct Player {
-        int health;
-        int x_pos;
-        int y_pos;
-    };
-
-    int time;
-    int XscreenScroll1;
-    int XscreenScroll2;
-    int YscreenScroll1;
-    int YscreenScroll2;
-    Player p1;
-    Player p2;
-
-} SavedGameState;
 
 static SavedGameState SaveGameState()
 {
@@ -359,6 +287,7 @@ static SavedGameState SaveGameState()
         game_state.time = *gGameState->time;
         game_state.XscreenScroll2 = *gGameState->XscreenScroll2;
         game_state.YscreenScroll2 = *gGameState->YscreenScroll2;
+        // TODO: Load other values from PlayerData for each character (B 2020-10-19)
         /*
         game_state.p1.health = *gGameState->player1.health;
         game_state.p1.x_pos = *gGameState->player1.x_pos;
@@ -378,7 +307,7 @@ static SavedGameState SaveGameState()
 
     auto Xscreen_scroll_2_ref = (uintptr_t*)(base + pointer_offsets::XscreenScroll);
     auto Yscreen_scroll_2_ref = (uintptr_t*)(base + pointer_offsets::YscreenScroll);
-    logGameState((uintptr_t*)(base + pointer_offsets::time),p1_ref,p2_ref,Xscreen_scroll_2_ref,Yscreen_scroll_2_ref);
+    logGameState(game_state);
     std::memcpy(gP1Data->data(), (unsigned char*)(p1_dref), 0x214C4);
     std::memcpy(gP2Data->data(), (unsigned char*)(p2_dref), 0x214C4);
     return game_state;

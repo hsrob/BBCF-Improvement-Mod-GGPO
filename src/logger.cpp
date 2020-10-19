@@ -1,9 +1,12 @@
 #include "../include/logger.h"
+#include "../include/game_player_data.h"
 #include <time.h>
 #include <fstream>
 #include <sstream>
 #include <iomanip> 
-#include <string> 
+#include <string>
+#include <vector>
+
 bool checkHookSuccess(PBYTE addr, const char* funcName)
 {
 	if (!addr)
@@ -40,13 +43,34 @@ std::string uint_to_hex(unsigned int i)
 		<< std::hex << i;
 	return stream.str();
 }
-void logGameState(uintptr_t* time, uintptr_t* p1, uintptr_t* p2, uintptr_t* XScreenScroll, uintptr_t* YScreenScroll, uintptr_t* objectData[])
+void logGameState(GameState gameState)
 {
-	fprintf(g_oFile, ("Time Address: "+uint_to_hex((unsigned int)time) + " Value: "+ std::to_string(*time) +"\n").c_str());
-	fprintf(g_oFile, ("P1 Address: " + uint_to_hex((unsigned int)p1) + " Value: " + uint_to_hex(*p1) + "\n").c_str());
-	fprintf(g_oFile, ("P2 Address: " + uint_to_hex((unsigned int)p2) + " Value: " + uint_to_hex(*p2) + "\n").c_str());
-	fprintf(g_oFile, ("X Screen Scroll 2 Address: " + uint_to_hex((unsigned int)XScreenScroll) + " Value: " + std::to_string(*XScreenScroll) + "\n").c_str());
-	fprintf(g_oFile, ("Y Screen Scroll 2 Address: " + uint_to_hex((unsigned int)YScreenScroll) + " Value: " + std::to_string(*YScreenScroll) + "\n").c_str());
+	fprintf(g_oFile, ("Time: " + std::to_string(*gameState.time) + "\n").c_str());
+	fprintf(g_oFile, ("XscreenScroll1: " + std::to_string(*gameState.XscreenScroll1) + "\n").c_str());
+	fprintf(g_oFile, ("XscreenScroll2: " + std::to_string(*gameState.XscreenScroll2) + "\n").c_str());
+	fprintf(g_oFile, ("YscreenScroll1: " + std::to_string(*gameState.YscreenScroll1) + "\n").c_str());
+	fprintf(g_oFile, ("YscreenScroll2: " + std::to_string(*gameState.YscreenScroll2) + "\n").c_str());
+	std::vector<PlayerData> players = { gameState.player1, gameState.player2 };
+
+	for (int i = 0; i <= 1; i++) {
+		std::string p = "P" + std::to_string(i + 1);
+		fprintf(g_oFile, (p + " health: " + std::to_string(*players[i].health) + "\n").c_str());
+		fprintf(g_oFile, (p + " x_pos: " + std::to_string(*players[i].x_pos) + "\n").c_str());
+		fprintf(g_oFile, (p + " y_pos: " + std::to_string(*players[i].y_pos) + "\n").c_str());
+		fprintf(g_oFile, (p + " effect: " + std::to_string(*players[i].effect) + "\n").c_str());
+		fprintf(g_oFile, (p + " heat: " + std::to_string(*players[i].heat) + "\n").c_str());
+		fprintf(g_oFile, (p + " barrier: " + std::to_string(*players[i].barrier) + "\n").c_str());
+		fprintf(g_oFile, (p + " danger: " + std::to_string(*players[i].danger) + "\n").c_str());
+		fprintf(g_oFile, (p + " burst: " + std::to_string(*players[i].burst) + "\n").c_str());
+		fprintf(g_oFile, (p + " activeFlow: " + std::to_string(*players[i].activeFlow) + "\n").c_str());
+		fprintf(g_oFile, (p + " overdriveTime: " + std::to_string(*players[i].overdriveTime) + "\n").c_str());
+		fprintf(g_oFile, (p + " damageScaling: " + std::to_string(*players[i].damageScaling) + "\n").c_str());
+		fprintf(g_oFile, (p + " objectLifetime: " + std::to_string(*players[i].objectLifetime) + "\n").c_str());
+		fprintf(g_oFile, (p + " objectDestroyTime: " + std::to_string(*players[i].objectDestroyTime) + "\n").c_str());
+		fprintf(g_oFile, (p + " y_pos: " + std::to_string(*players[i].y_pos) + "\n").c_str());
+		fprintf(g_oFile, (p + " sprite: " + std::to_string(*players[i].sprite) + "\n").c_str());
+	}
+	
 	fflush(g_oFile);
 }
 

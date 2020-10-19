@@ -68,6 +68,7 @@
     <ClInclude Include="include\D3D9EXWrapper\ID3D9EXWrapper_Device.h" />
     <ClInclude Include="include\D3D9EXWrapper\ID3D9Wrapper_Sprite.h" />
     <ClInclude Include="include\D3D9EXWrapper\ID3DXWrapper_Effect.h" />
+    <ClInclude Include="include\game_player_data.h" />
     <ClInclude Include="include\hook_manager.h" />
     <ClInclude Include="include\ImGui\ImGuiSystem.h" />
     <ClInclude Include="include\ImGui\fonts.h" />

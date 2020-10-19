@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-
+#include "game_player_data.h"
 //#define RELEASE_VER
 
 #ifndef RELEASE_VER
