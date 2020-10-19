@@ -269,7 +269,18 @@ namespace pointer_offsets {
     namespace player_common {
         static const std::array<unsigned int, 1> health = { 0x9D4 };
         static const std::array<unsigned int, 1> xpos   = { 0x268 };
-        static const std::array<unsigned int, 1> ypos   = { 0x26C };
+        static const std::array<unsigned int, 1> ypos = { 0x26C };
+        static const std::array<unsigned int, 1> effect = { 0x22C };
+        static const std::array<unsigned int, 1> heat = { 0x5AD4 };
+        static const std::array<unsigned int, 1> barrier = { 0x5B04 };
+        static const std::array<unsigned int, 1> danger = { 0x5B0C };
+        static const std::array<unsigned int, 1> burst = { 0x5AE4 };
+        static const std::array<unsigned int, 1> activeFlow = { 0x200D8 };
+        static const std::array<unsigned int, 1> overdriveTime = { 0x1C0 };
+        static const std::array<unsigned int, 1> damageScaling = { 0x1F0 };
+        static const std::array<unsigned int, 1> sprite = { 0xD8 };
+        // string version of `sprite`? ex. iz000_00.bmp Izayoi neutral sprite (hsrob 2020-10-19)
+        static const std::array<unsigned int, 1> spriteState = { 0xD8 };
     }
 }
 
