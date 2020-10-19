@@ -45,7 +45,10 @@ std::string uint_to_hex(unsigned int i)
 }
 void logGameState(SavedGameState gameState)
 {
-	fprintf(g_oFile, ("Time: " + std::to_string(gameState.time) + "\n").c_str());
+	char *time = getFullDate();
+	fprintf(g_oFile, ("--- Time: " + std::to_string(*time) + " ---\n").c_str());
+	free(time);
+	fprintf(g_oFile, ("Round Time: " + std::to_string(gameState.time) + "\n").c_str());
 	fprintf(g_oFile, ("XscreenScroll1: " + std::to_string(gameState.XscreenScroll1) + "\n").c_str());
 	fprintf(g_oFile, ("XscreenScroll2: " + std::to_string(gameState.XscreenScroll2) + "\n").c_str());
 	fprintf(g_oFile, ("YscreenScroll1: " + std::to_string(gameState.YscreenScroll1) + "\n").c_str());
