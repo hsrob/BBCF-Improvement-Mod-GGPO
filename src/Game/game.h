@@ -281,21 +281,46 @@ extern std::unique_ptr<std::array<unsigned char, 0x214C4 >> gP2Data;
 
 static SavedGameState SaveGameState()
 {
-    SavedGameState game_state;
+    SavedGameState saved_game_state;
 
     if (gGameState) {
-        game_state.time = *gGameState->time;
-        game_state.XscreenScroll2 = *gGameState->XscreenScroll2;
-        game_state.YscreenScroll2 = *gGameState->YscreenScroll2;
-        // TODO: Load other values from PlayerData for each character (B 2020-10-19)
-        /*
-        game_state.player1.health = *gGameState->player1.health;
-        game_state.player1.x_pos = *gGameState->player1.x_pos;
-        game_state.player1.y_pos = *gGameState->player1.y_pos;
+        saved_game_state.time = *gGameState->time;
+        saved_game_state.XscreenScroll2 = *gGameState->XscreenScroll2;
+        saved_game_state.YscreenScroll2 = *gGameState->YscreenScroll2;
+        
+        saved_game_state.player1.health = *gGameState->player1.health;
+        saved_game_state.player1.x_pos = *gGameState->player1.x_pos;
+        saved_game_state.player1.y_pos = *gGameState->player1.y_pos;
+		saved_game_state.player1.effect = *gGameState->player1.effect;
+        saved_game_state.player1.heat = *gGameState->player1.heat;
+        saved_game_state.player1.barrier = *gGameState->player1.barrier;
+        saved_game_state.player1.danger = *gGameState->player1.danger;
+        saved_game_state.player1.burst = *gGameState->player1.burst;
+        saved_game_state.player1.activeFlow = *gGameState->player1.activeFlow;
+        saved_game_state.player1.overdriveTime = *gGameState->player1.overdriveTime;
+        saved_game_state.player1.damageScaling = *gGameState->player1.damageScaling;
+        saved_game_state.player1.objectLifetime = *gGameState->player1.objectLifetime;
+        saved_game_state.player1.objectDestroyTime = *gGameState->player1.objectDestroyTime;
+        saved_game_state.player1.sprite = *gGameState->player1.sprite;
+        saved_game_state.player1.spriteState = *gGameState->player1.spriteState;
 
-        game_state.player2.health = *gGameState->player2.health;
-        game_state.player2.x_pos = *gGameState->player2.x_pos;
-        game_state.player2.y_pos = *gGameState->player2.y_pos;*/
+        saved_game_state.player2.health = *gGameState->player2.health;
+        saved_game_state.player2.x_pos = *gGameState->player2.x_pos;
+        saved_game_state.player2.y_pos = *gGameState->player2.y_pos;
+		saved_game_state.player2.effect = *gGameState->player2.effect;
+        saved_game_state.player2.heat = *gGameState->player2.heat;
+        saved_game_state.player2.barrier = *gGameState->player2.barrier;
+        saved_game_state.player2.danger = *gGameState->player2.danger;
+        saved_game_state.player2.burst = *gGameState->player2.burst;
+        saved_game_state.player2.activeFlow = *gGameState->player2.activeFlow;
+        saved_game_state.player2.overdriveTime = *gGameState->player2.overdriveTime;
+        saved_game_state.player2.damageScaling = *gGameState->player2.damageScaling;
+        saved_game_state.player2.objectLifetime = *gGameState->player2.objectLifetime;
+        saved_game_state.player2.objectDestroyTime = *gGameState->player2.objectDestroyTime;
+        saved_game_state.player2.sprite = *gGameState->player2.sprite;
+        saved_game_state.player2.spriteState = *gGameState->player2.spriteState;
+
+		// TODO: Load character specific values for each player (B 2020-10-19)
     }
     
     auto base = (uintptr_t)Containers::gameProc.hBBCFGameModule;
@@ -307,26 +332,50 @@ static SavedGameState SaveGameState()
 
     auto Xscreen_scroll_2_ref = (uintptr_t*)(base + pointer_offsets::XscreenScroll);
     auto Yscreen_scroll_2_ref = (uintptr_t*)(base + pointer_offsets::YscreenScroll);
-    logGameState(game_state);
+    logGameState(saved_game_state);
     std::memcpy(gP1Data->data(), (unsigned char*)(p1_dref), 0x214C4);
     std::memcpy(gP2Data->data(), (unsigned char*)(p2_dref), 0x214C4);
-    return game_state;
+    return saved_game_state;
 }
 
-static void LoadGameState(SavedGameState const& game_state)
+static void LoadGameState(SavedGameState const& saved_game_state)
 {
     if (gGameState) {
-        *gGameState->time = game_state.time;
-        *gGameState->XscreenScroll2 = game_state.XscreenScroll2;
-        *gGameState->YscreenScroll2 = game_state.YscreenScroll2;
+        *gGameState->time = saved_game_state.time;
+        *gGameState->XscreenScroll2 = saved_game_state.XscreenScroll2;
+        *gGameState->YscreenScroll2 = saved_game_state.YscreenScroll2;
 
-        /**gGameState->player1.health = game_state.player1.health;
-        *gGameState->player1.x_pos = game_state.player1.x_pos;
-        *gGameState->player1.y_pos = game_state.player1.y_pos;
+        *gGameState->player1.health = saved_game_state.player1.health;
+        *gGameState->player1.x_pos = saved_game_state.player1.x_pos;
+        *gGameState->player1.y_pos = saved_game_state.player1.y_pos;
+		*gGameState->player1.effect = saved_game_state.player1.effect;
+        *gGameState->player1.heat = saved_game_state.player1.heat;
+        *gGameState->player1.barrier = saved_game_state.player1.barrier;
+        *gGameState->player1.danger = saved_game_state.player1.danger;
+        *gGameState->player1.burst = saved_game_state.player1.burst;
+        *gGameState->player1.activeFlow = saved_game_state.player1.activeFlow;
+        *gGameState->player1.overdriveTime = saved_game_state.player1.overdriveTime;
+        *gGameState->player1.damageScaling = saved_game_state.player1.damageScaling;
+        *gGameState->player1.objectLifetime = saved_game_state.player1.objectLifetime;
+        *gGameState->player1.objectDestroyTime = saved_game_state.player1.objectDestroyTime;
+        *gGameState->player1.sprite = saved_game_state.player1.sprite;
+        *gGameState->player1.spriteState = saved_game_state.player1.spriteState;
 
-        *gGameState->player2.health = game_state.player2.health;
-        *gGameState->player2.x_pos = game_state.player2.x_pos;
-        *gGameState->player2.y_pos = game_state.player2.y_pos;*/
+        *gGameState->player2.health = saved_game_state.player2.health;
+        *gGameState->player2.x_pos = saved_game_state.player2.x_pos;
+        *gGameState->player2.y_pos = saved_game_state.player2.y_pos;
+		*gGameState->player2.effect = saved_game_state.player2.effect;
+        *gGameState->player2.heat = saved_game_state.player2.heat;
+        *gGameState->player2.barrier = saved_game_state.player2.barrier;
+        *gGameState->player2.danger = saved_game_state.player2.danger;
+        *gGameState->player2.burst = saved_game_state.player2.burst;
+        *gGameState->player2.activeFlow = saved_game_state.player2.activeFlow;
+        *gGameState->player2.overdriveTime = saved_game_state.player2.overdriveTime;
+        *gGameState->player2.damageScaling = saved_game_state.player2.damageScaling;
+        *gGameState->player2.objectLifetime = saved_game_state.player2.objectLifetime;
+        *gGameState->player2.objectDestroyTime = saved_game_state.player2.objectDestroyTime;
+        *gGameState->player2.sprite = saved_game_state.player2.sprite;
+        *gGameState->player2.spriteState = saved_game_state.player2.spriteState;
     }
     auto base = (uintptr_t)Containers::gameProc.hBBCFGameModule;
 
