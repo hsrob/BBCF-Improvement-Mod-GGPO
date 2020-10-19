@@ -17,6 +17,7 @@
 #include "../../include/bbcf_im_networking.h"
 #include "../../include/internal_palette_datas.h"
 #include "../../src/Game/game.h"
+#include "../../include/logger.h"
 
 // reminder to myself, pitfall of using imgui in your project:
 // ALWAYS ADD THE IMGUI SOURCE FILES TO YOUR PROJECT OR YOU WILL GET UNRESOLVED EXTERNAL SYMBOL ERRORS
@@ -858,8 +859,10 @@ void ImGuiSystem::ShowCustomPalettesMenu()
 
 void ImGuiSystem::ShowGGPONetplayMenu()
 {
+	logger("ShowGGPONetplayMenu");
 	if (*Containers::gameVals.pGameMode == GAME_MODE_ONLINE || *Containers::gameVals.pGameMode == GAME_STATE_LOBBY)
 	{
+		logger("Opened GGPO Netplay Menu");
 		ImGui::Button("Host/Join"); ImGui::SameLine(); ImGui::TextDisabled("CANNOUT USE DURING ONLINE MODES");
 
 		ImGui::Button("Spectate"); ImGui::SameLine(); ImGui::TextDisabled("CANNOUT USE DURING ONLINE MODES");
@@ -868,11 +871,13 @@ void ImGuiSystem::ShowGGPONetplayMenu()
 	{
 		if (ImGui::Button("Host/Join"))
 		{
+			logger("Show GGPO Host Join Menu");
 			show_ggpo_host_join_window ^= 1;
 		}
 
 		if (ImGui::Button("Spectate"))
 		{
+			logger("Show GGPO Spectate Menu");
 			show_ggpo_spectate_window ^= 1;
 		}
 
@@ -886,6 +891,8 @@ void ImGuiSystem::ShowGgpoHostJoinWindow(bool* p_open)
 
 	ImGui::Begin("Host/Join", p_open);
 
+	ImGui::BeginPopup("ShowGgpoHostJoinWindow");
+
 	ImGui::Text("Example text");
 
 	ImGui::EndPopup();
@@ -897,6 +904,8 @@ void ImGuiSystem::ShowGgpoSpectateWindow(bool* p_open)
 		return;
 
 	ImGui::Begin("Spectate", p_open);
+
+	ImGui::BeginPopup("ShowGgpoHostJoinWindow");
 
 	ImGui::Text("Example text");
 
