@@ -49,10 +49,15 @@ void logGameState(SavedGameState gameState)
 	fprintf(g_oFile, ("--- Time: " + std::to_string(*time) + " ---\n").c_str());
 	free(time);
 	fprintf(g_oFile, ("Round Time: " + std::to_string(gameState.time) + "\n").c_str());
-	fprintf(g_oFile, ("XscreenScroll1: " + std::to_string(gameState.XscreenScroll1) + "\n").c_str());
-	fprintf(g_oFile, ("XscreenScroll2: " + std::to_string(gameState.XscreenScroll2) + "\n").c_str());
-	fprintf(g_oFile, ("YscreenScroll1: " + std::to_string(gameState.YscreenScroll1) + "\n").c_str());
-	fprintf(g_oFile, ("YscreenScroll2: " + std::to_string(gameState.YscreenScroll2) + "\n").c_str());
+	fprintf(g_oFile, ("XscreenScroll: " + std::to_string(gameState.XscreenScroll) + "\n").c_str());
+	fprintf(g_oFile, ("YscreenScroll: " + std::to_string(gameState.YscreenScroll) + "\n").c_str());
+
+	fprintf(g_oFile, ("universalEffects: " + std::to_string(gameState.universalEffects) + "\n").c_str());
+	fprintf(g_oFile, ("universalEffects2: " + std::to_string(gameState.universalEffects2) + "\n").c_str());
+	fprintf(g_oFile, ("universalEffectsUnknown1: " + std::to_string(gameState.universalEffectsUnknown1) + "\n").c_str());
+	fprintf(g_oFile, ("universalEffectsUnknown5: " + std::to_string(gameState.universalEffectsUnknown5) + "\n").c_str());
+	fprintf(g_oFile, ("universalEffectCounter: " + std::to_string(gameState.universalEffectCounter) + "\n").c_str());
+	
 	std::vector<SavedGameState::SavedPlayerData> players = { gameState.player1, gameState.player2 };
 
 	for (int i = 0; i <= 1; i++) {

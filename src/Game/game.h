@@ -251,6 +251,12 @@ namespace pointer_offsets {
     static const unsigned int XscreenScroll = 0xDC2130;
     static const unsigned int YscreenScroll = 0xDC2134;
 
+	static const unsigned int universalEffects = 0x59B0A4;
+	static const unsigned int universalEffects2 = 0x59B0A8;
+	static const unsigned int universalEffectsUnknown1 = 0x59B0B4;
+    static const unsigned int universalEffectsUnknown5 = 0x5ABD94;
+    static const unsigned int universalEffectCounter = 0x59B0C8;
+
     namespace player_common {
         static const std::array<unsigned int, 1> health = { 0x9D4 };
         static const std::array<unsigned int, 1> xpos   = { 0x268 };
@@ -267,7 +273,8 @@ namespace pointer_offsets {
         static const std::array<unsigned int, 1> objectDestroyTime = { 0x16F8 };
         static const std::array<unsigned int, 1> sprite = { 0xD8 };
         // string version of `sprite`? ex. iz000_00.bmp Izayoi neutral sprite (hsrob 2020-10-19)
-        static const std::array<unsigned int, 1> spriteState = { 0xD8 };
+        // I now think this is unnecessary, restoring the `sprite` pointer value works well enough (I think - hsrob 2020-10-20)
+    	static const std::array<unsigned int, 1> spriteState = { 0xD8 };
     }
 }
 
@@ -285,8 +292,14 @@ static SavedGameState SaveGameState()
 
     if (gGameState) {
         saved_game_state.time = *gGameState->time;
-        saved_game_state.XscreenScroll2 = *gGameState->XscreenScroll2;
-        saved_game_state.YscreenScroll2 = *gGameState->YscreenScroll2;
+        saved_game_state.XscreenScroll = *gGameState->XscreenScroll;
+        saved_game_state.YscreenScroll = *gGameState->YscreenScroll;
+
+    	saved_game_state.universalEffects = *gGameState->universalEffects;
+        saved_game_state.universalEffects2 = *gGameState->universalEffects2;
+        saved_game_state.universalEffectsUnknown1 = *gGameState->universalEffectsUnknown1;
+        saved_game_state.universalEffectsUnknown5 = *gGameState->universalEffectsUnknown5;
+        saved_game_state.universalEffectCounter = *gGameState->universalEffectCounter;
         
         saved_game_state.player1.health = *gGameState->player1.health;
         saved_game_state.player1.x_pos = *gGameState->player1.x_pos;
@@ -329,12 +342,16 @@ static SavedGameState SaveGameState()
     auto p1_dref = *p1_ref;
     auto p2_ref= (uintptr_t*)(base + pointer_offsets::player2);
     auto p2_dref = *p2_ref;
-
-    auto Xscreen_scroll_2_ref = (uintptr_t*)(base + pointer_offsets::XscreenScroll);
-    auto Yscreen_scroll_2_ref = (uintptr_t*)(base + pointer_offsets::YscreenScroll);
+    
     logGameState(saved_game_state);
     std::memcpy(gP1Data->data(), (unsigned char*)(p1_dref), 0x214C4);
     std::memcpy(gP2Data->data(), (unsigned char*)(p2_dref), 0x214C4);
+	
+    auto Xscreen_scroll_ref = (uintptr_t*)(base + pointer_offsets::XscreenScroll);
+    auto Yscreen_scroll_ref = (uintptr_t*)(base + pointer_offsets::YscreenScroll);
+	
+    // TODO: Save/Restore Time, Screen Scroll Refs and Universal Effects (B 2020-10-21)
+	
     return saved_game_state;
 }
 
@@ -342,9 +359,15 @@ static void LoadGameState(SavedGameState const& saved_game_state)
 {
     if (gGameState) {
         *gGameState->time = saved_game_state.time;
-        *gGameState->XscreenScroll2 = saved_game_state.XscreenScroll2;
-        *gGameState->YscreenScroll2 = saved_game_state.YscreenScroll2;
+        *gGameState->XscreenScroll = saved_game_state.XscreenScroll;
+        *gGameState->YscreenScroll = saved_game_state.YscreenScroll;
 
+        *gGameState->universalEffects = saved_game_state.universalEffects;
+        *gGameState->universalEffects2 = saved_game_state.universalEffects2;
+        *gGameState->universalEffectsUnknown1 = saved_game_state.universalEffectsUnknown1;
+        *gGameState->universalEffectsUnknown5 = saved_game_state.universalEffectsUnknown5;
+        *gGameState->universalEffectCounter = saved_game_state.universalEffectCounter;
+    	
         *gGameState->player1.health = saved_game_state.player1.health;
         *gGameState->player1.x_pos = saved_game_state.player1.x_pos;
         *gGameState->player1.y_pos = saved_game_state.player1.y_pos;
@@ -384,6 +407,8 @@ static void LoadGameState(SavedGameState const& saved_game_state)
 	logGameState(saved_game_state);
     std::memcpy((unsigned char*)p1_dref, gP1Data->data(), 0x214C4);
     std::memcpy((unsigned char*)p2_dref, gP2Data->data(), 0x214C4);
+	
+    // TODO: Save/Restore Time, Screen Scroll Refs and Universal Effects (B 2020-10-21)
 
 }
 

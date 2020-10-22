@@ -27,29 +27,33 @@ typedef struct PlayerData {
 
 } PlayerData;
 
-typedef struct GameState {
-   
-   //int nFramesToSkipRender;
-   //int nFramesSkipped;
-   //int lastSecondNumFramesSimulated;
+typedef struct GameState
+{
+	//int nFramesToSkipRender;
+	//int nFramesSkipped;
+	//int lastSecondNumFramesSimulated;
 
-   //GGPOState ggpoState;
-   //SessionInitiationState sessionInitState;
+	//GGPOState ggpoState;
+	//SessionInitiationState sessionInitState;
 
-   //Struct definitons for GameObjectData
+	//Struct definitons for GameObjectData
 
-   //Camera values
+	//Camera values
 
-   int* time;
-   int* XscreenScroll1;
-   int* XscreenScroll2;
-   int* YscreenScroll1;
-   int* YscreenScroll2;
-   PlayerData player1;
-   PlayerData player2;
+	int* time;
+	int* XscreenScroll;
+	int* YscreenScroll;
 
-   //Will update this more as I get a clearer idea on what exactly we'll need
+	int* universalEffects;
+	int* universalEffects2;
+    int* universalEffectsUnknown1;
+    int* universalEffectsUnknown5;
+	int* universalEffectCounter;
 
+	PlayerData player1;
+	PlayerData player2;
+
+	//Will update this more as I get a clearer idea on what exactly we'll need
 } GameState;
 
 typedef struct SavedGameState {
@@ -73,10 +77,15 @@ typedef struct SavedGameState {
     };
 
     int time;
-    int XscreenScroll1;
-    int XscreenScroll2;
-    int YscreenScroll1;
-    int YscreenScroll2;
+    int XscreenScroll;
+    int YscreenScroll;
+
+	int universalEffects;
+	int universalEffects2;
+    int universalEffectsUnknown1;
+    int universalEffectsUnknown5;
+	int universalEffectCounter;
+	
     SavedPlayerData player1;
     SavedPlayerData player2;
 

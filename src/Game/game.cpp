@@ -142,8 +142,14 @@ void InitGameStatePointers()
 
     gGameState->time = (int*)(base + pointer_offsets::time);
 
-    gGameState->XscreenScroll2 = (int*)(base + pointer_offsets::XscreenScroll);
-    gGameState->YscreenScroll2 = (int*)(base + pointer_offsets::YscreenScroll);
+    gGameState->XscreenScroll = (int*)(base + pointer_offsets::XscreenScroll);
+    gGameState->YscreenScroll = (int*)(base + pointer_offsets::YscreenScroll);
+
+	gGameState->universalEffects = (int*)(base + pointer_offsets::universalEffects);
+    gGameState->universalEffects2 = (int*)(base + pointer_offsets::universalEffects2);
+    gGameState->universalEffectsUnknown1 = (int*)(base + pointer_offsets::universalEffectsUnknown1);
+    gGameState->universalEffectsUnknown5 = (int*)(base + pointer_offsets::universalEffectsUnknown5);
+    gGameState->universalEffectCounter = (int*)(base + pointer_offsets::universalEffectCounter);
 
     GetPlayerPointers(base + pointer_offsets::player1, gGameState->player1, "Player 1");
     GetPlayerPointers(base + pointer_offsets::player2, gGameState->player2, "Player 2");
