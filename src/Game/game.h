@@ -497,6 +497,7 @@ static void LoadGameState(SavedGameState const& saved_game_state)
     }
     catch (const std::exception& exc)
     {
+        logger("--- ERROR ---");
         logger(exc.what());
     }
 }
