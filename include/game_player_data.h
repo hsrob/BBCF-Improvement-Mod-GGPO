@@ -73,6 +73,7 @@ typedef struct SavedGameState {
         int objectLifetime;
         int objectDestroyTime;
         int sprite;
+    	// TODO: Confirm this isn't needed and remove (B 2020-10-21)
         std::string spriteState;
     };
 
