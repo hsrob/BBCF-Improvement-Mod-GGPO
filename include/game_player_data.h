@@ -29,10 +29,12 @@ typedef struct PlayerData {
 
 typedef struct GameState
 {
+	// Frame skip tracking
 	//int nFramesToSkipRender;
 	//int nFramesSkipped;
 	//int lastSecondNumFramesSimulated;
 
+	// Net State
 	//GGPOState ggpoState;
 	//SessionInitiationState sessionInitState;
 
@@ -44,12 +46,14 @@ typedef struct GameState
 	int* XscreenScroll;
 	int* YscreenScroll;
 
+	// Effects
 	int* universalEffects;
 	int* universalEffects2;
     int* universalEffectsUnknown1;
     int* universalEffectsUnknown5;
 	int* universalEffectCounter;
 
+	// Players
 	PlayerData player1;
 	PlayerData player2;
 

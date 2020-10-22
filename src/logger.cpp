@@ -29,7 +29,7 @@ inline void logger(const char* message, ...)
 
 	va_list args;
 	va_start(args, message);
-	vfprintf(g_oFile, message, args);
+	vfprintf(g_oFile, ( std::to_string(*message) + "\n").c_str(), args);
 	va_end(args);
 
 	fflush(g_oFile);
@@ -43,11 +43,9 @@ std::string uint_to_hex(unsigned int i)
 		<< std::hex << i;
 	return stream.str();
 }
-void logGameState(SavedGameState gameState)
+void logGameState(SavedGameState gameState, std::string headerMsg)
 {
-	char *time = getFullDate();
-	fprintf(g_oFile, ("--- Time: " + std::to_string(*time) + " ---\n").c_str());
-	free(time);
+	fprintf(g_oFile, ("--- " + headerMsg + " ---\n").c_str());
 	fprintf(g_oFile, ("Round Time: " + std::to_string(gameState.time) + "\n").c_str());
 	fprintf(g_oFile, ("XscreenScroll: " + std::to_string(gameState.XscreenScroll) + "\n").c_str());
 	fprintf(g_oFile, ("YscreenScroll: " + std::to_string(gameState.YscreenScroll) + "\n").c_str());

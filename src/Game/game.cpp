@@ -114,7 +114,8 @@ static void GetPlayerPointers(uintptr_t base, PlayerData& player_data, std::stri
         base,
         pointer_offsets::player_common::sprite
     );
-	
+
+	// TODO: Pretty sure we don't need this (B 2020-10-22)
 	player_data.spriteState = (std::string*)get_address_or_log(
         player + " spriteState",
         base,
@@ -140,8 +141,38 @@ void InitGameStatePointers()
 
     uintptr_t base = (uintptr_t)Containers::gameProc.hBBCFGameModule;
 
-    gGameState->time = (int*)(base + pointer_offsets::time);
-
+	// TODO: Replace with get_address_or_log (lol how did i forget)?
+    gGameState->time = (int*)get_address_or_log(
+        "time",
+        base,
+        pointer_offsets::time
+    );
+    gGameState->time = (int*)get_address_or_log(
+        "time",
+        base,
+        pointer_offsets::time
+    );
+    gGameState->time = (int*)get_address_or_log(
+        "time",
+        base,
+        pointer_offsets::time
+    );
+    gGameState->time = (int*)get_address_or_log(
+        "time",
+        base,
+        pointer_offsets::time
+    );
+    gGameState->time = (int*)get_address_or_log(
+        "time",
+        base,
+        pointer_offsets::time
+    );  //(int*)(base + pointer_offsets::time);
+    gGameState->time = (int*)get_address_or_log(
+        "time",
+        base,
+        pointer_offsets::time
+    );
+	
     gGameState->XscreenScroll = (int*)(base + pointer_offsets::XscreenScroll);
     gGameState->YscreenScroll = (int*)(base + pointer_offsets::YscreenScroll);
 
@@ -151,6 +182,8 @@ void InitGameStatePointers()
     gGameState->universalEffectsUnknown5 = (int*)(base + pointer_offsets::universalEffectsUnknown5);
     gGameState->universalEffectCounter = (int*)(base + pointer_offsets::universalEffectCounter);
 
+
+	
     GetPlayerPointers(base + pointer_offsets::player1, gGameState->player1, "Player 1");
     GetPlayerPointers(base + pointer_offsets::player2, gGameState->player2, "Player 2");
 }
