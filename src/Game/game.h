@@ -342,9 +342,9 @@ static SavedGameState SaveGameState()
     
 	// Game
     logger("Saving Game...");
-    uintptr_t* time_ref = (uintptr_t*)(base + pointer_offsets::time);
-    uintptr_t* XscreenScroll_ref = (uintptr_t*)(base + pointer_offsets::XscreenScroll);
-    uintptr_t* YscreenScroll_ref = (uintptr_t*)(base + pointer_offsets::YscreenScroll);
+    uintptr_t* time_ref = (uintptr_t*)(base + pointer_offsets::time[0]);
+    uintptr_t* XscreenScroll_ref = (uintptr_t*)(base + pointer_offsets::XscreenScroll[0]);
+    uintptr_t* YscreenScroll_ref = (uintptr_t*)(base + pointer_offsets::YscreenScroll[0]);
     logger("Calculated pointer offsets");
     auto time_dref = *time_ref;
     auto XscreenScroll_dref = *XscreenScroll_ref;
