@@ -1,4 +1,7 @@
 #include "game.h"
+#include <sstream>
+#include <iomanip> 
+#include <string>
 
 namespace game {
 
@@ -11,6 +14,28 @@ std::unique_ptr<GameState> gGameState;
 std::unique_ptr<CharData> gP1Data;
 std::unique_ptr<CharData> gP2Data;
 
+std::string uint_to_hex(unsigned int i)
+{
+    std::stringstream stream;
+    stream << "0x"
+        << std::setfill('0') << std::setw(sizeof(unsigned int) * 2)
+        << std::hex << i;
+    return stream.str();
+}
+	
+auto get_address_or_log = [](std::string const& name, uintptr_t base, auto offsets) {
+    uintptr_t addr = FindAddress(base, offsets);
+
+    if (!addr) {
+        LOG(2, ("Could not find address for " + name).c_str());
+    }
+    else
+    {
+        LOG(2, ("Address for " + name + " is " + uint_to_hex(addr)).c_str());
+    }
+    return addr;
+};
+	
 /// <summary>
 /// Gets the pointer data pointers in BBCF's memory, so we can access and write to them later for
 /// saving and loading state
@@ -21,16 +46,6 @@ std::unique_ptr<CharData> gP2Data;
 /// <param name="player">String representation of what player this is for logging purposes e.g. "player 1" or "player 2"</param>
 static void GetPlayerPointers(uintptr_t base, PlayerData& player_data, std::string const& player)
 {
-    auto get_address_or_log = [](std::string const& name, uintptr_t base, auto offsets) {
-        uintptr_t addr = FindAddress(base, offsets);
-
-        if (!addr) {
-            LOG(2, ("Could not find address for " + name).c_str());
-        }
-
-        return addr;
-    };
-
     player_data.health = (int*)get_address_or_log(
         player + " health",
         base,
@@ -129,61 +144,49 @@ void InitGameStatePointers()
     gP1Data = std::make_unique<CharData>();
     gP2Data = std::make_unique<CharData>();
 
-    auto get_address_or_log = [](std::string const& name, uintptr_t base, auto offsets) {
-        uintptr_t addr = FindAddress(base, offsets);
-
-        if (!addr) {
-            LOG(2, ("Could not find address for " + name).c_str());
-        }
-
-        return addr;
-    };
-
     uintptr_t base = (uintptr_t)Containers::gameProc.hBBCFGameModule;
 
-	// TODO: Replace with get_address_or_log (lol how did i forget)?
     gGameState->time = (int*)get_address_or_log(
         "time",
         base,
         pointer_offsets::time
     );
-    gGameState->time = (int*)get_address_or_log(
-        "time",
+    gGameState->XscreenScroll = (int*)get_address_or_log(
+        "XscreenScroll",
         base,
-        pointer_offsets::time
+        pointer_offsets::XscreenScroll
     );
-    gGameState->time = (int*)get_address_or_log(
-        "time",
+    gGameState->YscreenScroll = (int*)get_address_or_log(
+        "YscreenScroll",
         base,
-        pointer_offsets::time
+        pointer_offsets::YscreenScroll
     );
-    gGameState->time = (int*)get_address_or_log(
-        "time",
+    gGameState->universalEffects = (int*)get_address_or_log(
+        "universalEffects",
         base,
-        pointer_offsets::time
+        pointer_offsets::universalEffects
     );
-    gGameState->time = (int*)get_address_or_log(
-        "time",
+    gGameState->universalEffects2 = (int*)get_address_or_log(
+        "universalEffects2",
         base,
-        pointer_offsets::time
-    );  //(int*)(base + pointer_offsets::time);
-    gGameState->time = (int*)get_address_or_log(
-        "time",
-        base,
-        pointer_offsets::time
+        pointer_offsets::universalEffects2
     );
-	
-    gGameState->XscreenScroll = (int*)(base + pointer_offsets::XscreenScroll);
-    gGameState->YscreenScroll = (int*)(base + pointer_offsets::YscreenScroll);
-
-	gGameState->universalEffects = (int*)(base + pointer_offsets::universalEffects);
-    gGameState->universalEffects2 = (int*)(base + pointer_offsets::universalEffects2);
-    gGameState->universalEffectsUnknown1 = (int*)(base + pointer_offsets::universalEffectsUnknown1);
-    gGameState->universalEffectsUnknown5 = (int*)(base + pointer_offsets::universalEffectsUnknown5);
-    gGameState->universalEffectCounter = (int*)(base + pointer_offsets::universalEffectCounter);
-
-
-	
+    gGameState->universalEffectsUnknown1 = (int*)get_address_or_log(
+        "universalEffectsUnknown1",
+        base,
+        pointer_offsets::universalEffectsUnknown1
+    );
+    gGameState->universalEffectsUnknown5 = (int*)get_address_or_log(
+        "universalEffectsUnknown5",
+        base,
+        pointer_offsets::universalEffectsUnknown5
+    );
+    gGameState->universalEffectCounter = (int*)get_address_or_log(
+        "universalEffectCounter",
+        base,
+        pointer_offsets::universalEffectCounter
+    );
+    
     GetPlayerPointers(base + pointer_offsets::player1, gGameState->player1, "Player 1");
     GetPlayerPointers(base + pointer_offsets::player2, gGameState->player2, "Player 2");
 }

@@ -245,18 +245,19 @@ static uintptr_t FindAddress(uintptr_t base, std::array<unsigned int, T> const& 
 }
 
 namespace pointer_offsets {
-    static const unsigned int time      = 0xDA0CE8;
-    static const unsigned int player1   = 0x819DF0;
-    static const unsigned int player2   = 0xDC204C;
-    static const unsigned int XscreenScroll = 0xDC2130;
-    static const unsigned int YscreenScroll = 0xDC2134;
+    static const std::array<unsigned int, 1> time = { 0xDA0CE8 };    
+    static const std::array<unsigned int, 1> XscreenScroll = { 0xDC2130 };
+    static const std::array<unsigned int, 1> YscreenScroll = { 0xDC2134 };
+	static const std::array<unsigned int, 1> universalEffects = { 0x59B0A4 };
+	static const std::array<unsigned int, 1> universalEffects2 = { 0x59B0A8 };
+	static const std::array<unsigned int, 1> universalEffectsUnknown1 = { 0x59B0B4 };
+    static const std::array<unsigned int, 1> universalEffectsUnknown5 = { 0x5ABD94 };
+    static const std::array<unsigned int, 1> universalEffectCounter = { 0x59B0C8 };
 
-	static const unsigned int universalEffects = 0x59B0A4;
-	static const unsigned int universalEffects2 = 0x59B0A8;
-	static const unsigned int universalEffectsUnknown1 = 0x59B0B4;
-    static const unsigned int universalEffectsUnknown5 = 0x5ABD94;
-    static const unsigned int universalEffectCounter = 0x59B0C8;
-
+	// Note these aren't arrays, we only need a single offset here.
+    static const unsigned int player1 = 0x819DF0;
+    static const unsigned int player2 = 0xDC204C;
+	
     namespace player_common {
         static const std::array<unsigned int, 1> health = { 0x9D4 };
         static const std::array<unsigned int, 1> xpos   = { 0x268 };
@@ -349,7 +350,7 @@ static SavedGameState SaveGameState()
     auto XscreenScroll_dref = *XscreenScroll_ref;
     auto YscreenScroll_dref = *YscreenScroll_ref;
     logger("Set drefs...");
-    std::memcpy(gGameState->time, (unsigned char*)(time_dref), sizeof(unsigned int));
+    std::memcpy(gGameState->time, (unsigned char*)(time_dref), sizeof(unsigned char*));
     logger("Saved time");
     std::memcpy(gGameState->XscreenScroll, (unsigned char*)(XscreenScroll_dref), sizeof(unsigned char*));
     logger("Saved XscreenScroll");
@@ -358,11 +359,11 @@ static SavedGameState SaveGameState()
 	
 	// Effects
     logger("Saving Effects...");
-    auto universalEffects_ref = (uintptr_t*)(base + pointer_offsets::universalEffects);
-    auto universalEffects2_ref = (uintptr_t*)(base + pointer_offsets::universalEffects2);
-    auto universalEffectsUnknown1_ref = (uintptr_t*)(base + pointer_offsets::universalEffectsUnknown1);
-    auto universalEffectsUnknown5_ref = (uintptr_t*)(base + pointer_offsets::universalEffectsUnknown5);
-    auto universalEffectCounter_ref = (uintptr_t*)(base + pointer_offsets::universalEffectCounter);
+    auto universalEffects_ref = (uintptr_t*)(base + pointer_offsets::universalEffects[0]);
+    auto universalEffects2_ref = (uintptr_t*)(base + pointer_offsets::universalEffects2[0]);
+    auto universalEffectsUnknown1_ref = (uintptr_t*)(base + pointer_offsets::universalEffectsUnknown1[0]);
+    auto universalEffectsUnknown5_ref = (uintptr_t*)(base + pointer_offsets::universalEffectsUnknown5[0]);
+    auto universalEffectCounter_ref = (uintptr_t*)(base + pointer_offsets::universalEffectCounter[0]);
 	
     auto universalEffects_dref = *universalEffects_ref;
     auto universalEffects2_dref = *universalEffects2_ref;
@@ -372,7 +373,7 @@ static SavedGameState SaveGameState()
 	
     std::memcpy(gGameState->universalEffects, (unsigned char*)(universalEffects_dref), sizeof(unsigned char*));
     std::memcpy(gGameState->universalEffects2, (unsigned char*)(universalEffects2_dref), sizeof(unsigned char*));
-    std::memcpy(gGameState->universalEffectsUnknown1, (unsigned char*)(universalEffectsUnknown1_dref), sizeof(unsigned int));
+    std::memcpy(gGameState->universalEffectsUnknown1, (unsigned char*)(universalEffectsUnknown1_dref), sizeof(unsigned char*));
     std::memcpy(gGameState->universalEffectsUnknown5, (unsigned char*)(universalEffectsUnknown5_dref), sizeof(unsigned char*));
     std::memcpy(gGameState->universalEffectCounter, (unsigned char*)(universalEffectCounter_dref), sizeof(unsigned char*));
     logger("Saved Effects");
@@ -441,9 +442,9 @@ static void LoadGameState(SavedGameState const& saved_game_state)
 	
     // Game
     logger("Loading Game...");
-    auto time_ref = (uintptr_t*)(base + pointer_offsets::time);
-    auto XscreenScroll_ref = (uintptr_t*)(base + pointer_offsets::XscreenScroll);
-    auto YscreenScroll_ref = (uintptr_t*)(base + pointer_offsets::YscreenScroll);
+    auto time_ref = (uintptr_t*)(base + pointer_offsets::time[0]);
+    auto XscreenScroll_ref = (uintptr_t*)(base + pointer_offsets::XscreenScroll[0]);
+    auto YscreenScroll_ref = (uintptr_t*)(base + pointer_offsets::YscreenScroll[0]);
 
     auto time_dref = *time_ref;
     auto XscreenScroll_dref = *XscreenScroll_ref;
@@ -456,11 +457,11 @@ static void LoadGameState(SavedGameState const& saved_game_state)
 	
     // Effects
     logger("Loading Effects...");
-    auto universalEffects_ref = (uintptr_t*)(base + pointer_offsets::universalEffects);
-    auto universalEffects2_ref = (uintptr_t*)(base + pointer_offsets::universalEffects2);
-    auto universalEffectsUnknown1_ref = (uintptr_t*)(base + pointer_offsets::universalEffectsUnknown1);
-    auto universalEffectsUnknown5_ref = (uintptr_t*)(base + pointer_offsets::universalEffectsUnknown5);
-    auto universalEffectCounter_ref = (uintptr_t*)(base + pointer_offsets::universalEffectCounter);
+    auto universalEffects_ref = (uintptr_t*)(base + pointer_offsets::universalEffects[0]);
+    auto universalEffects2_ref = (uintptr_t*)(base + pointer_offsets::universalEffects2[0]);
+    auto universalEffectsUnknown1_ref = (uintptr_t*)(base + pointer_offsets::universalEffectsUnknown1[0]);
+    auto universalEffectsUnknown5_ref = (uintptr_t*)(base + pointer_offsets::universalEffectsUnknown5[0]);
+    auto universalEffectCounter_ref = (uintptr_t*)(base + pointer_offsets::universalEffectCounter[0]);
 
     auto universalEffects_dref = *universalEffects_ref;
     auto universalEffects2_dref = *universalEffects2_ref;
