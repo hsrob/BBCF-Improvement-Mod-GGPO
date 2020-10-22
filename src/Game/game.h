@@ -393,6 +393,7 @@ static SavedGameState SaveGameState()
     }
     catch (const std::exception& exc)
     {
+        logger("--- ERROR ---");
         logger(exc.what());
     }
 	
