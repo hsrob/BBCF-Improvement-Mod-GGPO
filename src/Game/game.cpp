@@ -28,11 +28,11 @@ auto get_address_or_log = [](std::string const& name, uintptr_t base, auto offse
     uintptr_t addr = FindAddress(base, offsets);
 
     if (!addr) {
-        logger(("Could not find address for " + name).c_str());
+        logString(("Could not find address for " + name).c_str());
     }
     else
     {
-        logger(("Address for " + name + " is " + uint_to_hex(addr)).c_str());
+        logString(("Address for " + name + " is " + uint_to_hex(addr)).c_str());
     }
     return addr;
 };

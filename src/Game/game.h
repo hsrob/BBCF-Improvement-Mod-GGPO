@@ -343,24 +343,24 @@ static SavedGameState SaveGameState()
         auto base = (uintptr_t)Containers::gameProc.hBBCFGameModule;
     
 		// Game
-	    logger("Saving Game...");
+	    logString("Saving Game...");
 	    uintptr_t* time_ref = (uintptr_t*)(base + pointer_offsets::time[0]);
 	    uintptr_t* XscreenScroll_ref = (uintptr_t*)(base + pointer_offsets::XscreenScroll[0]);
 	    uintptr_t* YscreenScroll_ref = (uintptr_t*)(base + pointer_offsets::YscreenScroll[0]);
-	    logger("Calculated pointer offsets");
+	    logString("Calculated pointer offsets");
 	    auto time_dref = *time_ref;
 	    auto XscreenScroll_dref = *XscreenScroll_ref;
 	    auto YscreenScroll_dref = *YscreenScroll_ref;
-	    logger("Set drefs...");
+	    logString("Set drefs...");
 	    std::memcpy(gGameState->time, (unsigned char*)(time_dref), sizeof(unsigned char*));
-	    logger("Saved time");
+	    logString("Saved time");
 	    std::memcpy(gGameState->XscreenScroll, (unsigned char*)(XscreenScroll_dref), sizeof(unsigned char*));
-	    logger("Saved XscreenScroll");
+	    logString("Saved XscreenScroll");
 	    std::memcpy(gGameState->YscreenScroll, (unsigned char*)(YscreenScroll_dref), sizeof(unsigned char*));
-	    logger("Saved YscreenScroll");
+	    logString("Saved YscreenScroll");
 		
 		// Effects
-	    logger("Saving Effects...");
+	    logString("Saving Effects...");
 	    auto universalEffects_ref = (uintptr_t*)(base + pointer_offsets::universalEffects[0]);
 	    auto universalEffects2_ref = (uintptr_t*)(base + pointer_offsets::universalEffects2[0]);
 	    auto universalEffectsUnknown1_ref = (uintptr_t*)(base + pointer_offsets::universalEffectsUnknown1[0]);
@@ -378,23 +378,23 @@ static SavedGameState SaveGameState()
 	    std::memcpy(gGameState->universalEffectsUnknown1, (unsigned char*)(universalEffectsUnknown1_dref), sizeof(unsigned char*));
 	    std::memcpy(gGameState->universalEffectsUnknown5, (unsigned char*)(universalEffectsUnknown5_dref), sizeof(unsigned char*));
 	    std::memcpy(gGameState->universalEffectCounter, (unsigned char*)(universalEffectCounter_dref), sizeof(unsigned char*));
-	    logger("Saved Effects");
+	    logString("Saved Effects");
 		
 		// Players
-	    logger("Saving Players...");
+	    logString("Saving Players...");
 	    auto p1_ref= (uintptr_t*)(base + pointer_offsets::player1);
 	    auto p1_dref = *p1_ref;
 	    auto p2_ref= (uintptr_t*)(base + pointer_offsets::player2);
 	    auto p2_dref = *p2_ref;
 	    std::memcpy(gP1Data->data(), (unsigned char*)(p1_dref), 0x214C4);
 	    std::memcpy(gP2Data->data(), (unsigned char*)(p2_dref), 0x214C4);
-	    logger("Saved Players");
-	    logger("Saved Game State");
+	    logString("Saved Players");
+	    logString("Saved Game State");
     }
     catch (const std::exception& exc)
     {
-        logger("--- ERROR ---");
-        logger(exc.what());
+        logString("--- ERROR ---");
+        logString(exc.what());
     }
 	
     return saved_game_state;
@@ -451,7 +451,7 @@ static void LoadGameState(SavedGameState const& saved_game_state)
 	    auto base = (uintptr_t)Containers::gameProc.hBBCFGameModule;
 		
 	    // Game
-	    logger("Loading Game...");
+	    logString("Loading Game...");
 	    auto time_ref = (uintptr_t*)(base + pointer_offsets::time[0]);
 	    auto XscreenScroll_ref = (uintptr_t*)(base + pointer_offsets::XscreenScroll[0]);
 	    auto YscreenScroll_ref = (uintptr_t*)(base + pointer_offsets::YscreenScroll[0]);
@@ -463,10 +463,10 @@ static void LoadGameState(SavedGameState const& saved_game_state)
 	    std::memcpy((unsigned char*)(time_dref), gGameState->time, sizeof(unsigned char*));
 	    std::memcpy((unsigned char*)(XscreenScroll_dref), gGameState->XscreenScroll, sizeof(unsigned char*));
 	    std::memcpy((unsigned char*)(YscreenScroll_dref), gGameState->YscreenScroll, sizeof(unsigned char*));
-	    logger("Loaded Game");
+	    logString("Loaded Game");
 		
 	    // Effects
-	    logger("Loading Effects...");
+	    logString("Loading Effects...");
 	    auto universalEffects_ref = (uintptr_t*)(base + pointer_offsets::universalEffects[0]);
 	    auto universalEffects2_ref = (uintptr_t*)(base + pointer_offsets::universalEffects2[0]);
 	    auto universalEffectsUnknown1_ref = (uintptr_t*)(base + pointer_offsets::universalEffectsUnknown1[0]);
@@ -484,21 +484,21 @@ static void LoadGameState(SavedGameState const& saved_game_state)
 	    std::memcpy((unsigned char*)(universalEffectsUnknown1_dref), gGameState->universalEffectsUnknown1, sizeof(unsigned char*));
 	    std::memcpy((unsigned char*)(universalEffectsUnknown5_dref), gGameState->universalEffectsUnknown5, sizeof(unsigned char*));
 	    std::memcpy((unsigned char*)(universalEffectCounter_dref), gGameState->universalEffectCounter, sizeof(unsigned char*));
-	    logger("Loaded Effects");
+	    logString("Loaded Effects");
 
-	    logger("Loading Players...");
+	    logString("Loading Players...");
 	    auto p1_dref = *(uintptr_t*)(base + pointer_offsets::player1);
 	    auto p2_dref = *(uintptr_t*)(base + pointer_offsets::player2);
 		
 	    std::memcpy((unsigned char*)p1_dref, gP1Data->data(), 0x214C4);
 	    std::memcpy((unsigned char*)p2_dref, gP2Data->data(), 0x214C4);
-	    logger("Loaded Players");
-	    logger("Loaded Game State");
+	    logString("Loaded Players");
+	    logString("Loaded Game State");
     }
     catch (const std::exception& exc)
     {
-        logger("--- ERROR ---");
-        logger(exc.what());
+        logString("--- ERROR ---");
+        logString(exc.what());
     }
 }
 

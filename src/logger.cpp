@@ -35,6 +35,13 @@ inline void logger(const char* message, ...)
 	fflush(g_oFile);
 }
 
+void logString(std::string message)
+{
+	fprintf(g_oFile, (message + "\n").c_str());
+
+	fflush(g_oFile);
+}
+
 void logGameState(SavedGameState gameState, std::string headerMsg)
 {
 	fprintf(g_oFile, ("--- " + headerMsg + " ---\n").c_str());

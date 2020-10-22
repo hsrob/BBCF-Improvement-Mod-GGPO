@@ -12,6 +12,7 @@ if (DEBUG_LEVEL >= _level) { logger(_str, __VA_ARGS__); }}
 
 inline void logger(const char* message, ...);
 void logGameState(SavedGameState gameState, std::string headerMsg);
+void logString(std::string message);
 void openLogger();
 void closeLogger();
 //free it after usage!!
