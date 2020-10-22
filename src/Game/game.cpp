@@ -1,4 +1,5 @@
 #include "game.h"
+#include "../../include/logger.h"
 #include <sstream>
 #include <iomanip> 
 #include <string>
@@ -27,11 +28,11 @@ auto get_address_or_log = [](std::string const& name, uintptr_t base, auto offse
     uintptr_t addr = FindAddress(base, offsets);
 
     if (!addr) {
-        LOG(2, ("Could not find address for " + name).c_str());
+        logger(("Could not find address for " + name).c_str());
     }
     else
     {
-        LOG(2, ("Address for " + name + " is " + uint_to_hex(addr)).c_str());
+        logger(("Address for " + name + " is " + uint_to_hex(addr)).c_str());
     }
     return addr;
 };

@@ -35,14 +35,6 @@ inline void logger(const char* message, ...)
 	fflush(g_oFile);
 }
 
-std::string uint_to_hex(unsigned int i)
-{
-	std::stringstream stream;
-	stream << "0x"
-		<< std::setfill('0') << std::setw(sizeof(unsigned int) * 2)
-		<< std::hex << i;
-	return stream.str();
-}
 void logGameState(SavedGameState gameState, std::string headerMsg)
 {
 	fprintf(g_oFile, ("--- " + headerMsg + " ---\n").c_str());
