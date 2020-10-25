@@ -245,7 +245,8 @@ static uintptr_t FindAddress(uintptr_t base, std::array<unsigned int, T> const& 
 }
 
 namespace pointer_offsets {
-    static const std::array<unsigned int, 1> time = { 0xDA0CE8 };    
+    static const std::array<unsigned int, 1> time = { 0xDA0CE8 };
+    static const std::array<unsigned int, 1> hardTimeRef = { 0xDA0CEC };
     static const std::array<unsigned int, 1> XscreenScroll = { 0xDC2130 };
     static const std::array<unsigned int, 1> YscreenScroll = { 0xDC2134 };
 	static const std::array<unsigned int, 1> universalEffects = { 0x59B0A4 };

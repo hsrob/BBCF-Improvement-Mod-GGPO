@@ -128,6 +128,7 @@
     <ClCompile Include="depends\imgui\imgui_draw.cpp" />
     <ClCompile Include="depends\imgui\imgui_impl_dx9.cpp" />
     <ClCompile Include="src\Game\game.cpp" />
+    <ClCompile Include="src\SteamApiWrapper\SteamControllerWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\SteamApiWrapper\SteamMatchmakingWrapper.h">
@@ -232,6 +233,7 @@
     <ClInclude Include="depends\imgui\imconfig.h" />
     <ClInclude Include="src\Game\game.h" />
     <ClInclude Include="include\game_player_data.h" />
+    <ClInclude Include="include\SteamApiWrapper\SteamControllerWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="export\dinput8.def">

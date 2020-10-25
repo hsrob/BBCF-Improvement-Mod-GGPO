@@ -3,7 +3,7 @@
 #include <ctime>
 #include <atlstr.h>
 
-const int DEBUG_LEVEL = 2; //7=lowest priority, 0=highest
+const int DEBUG_LEVEL = 7; //7=lowest priority, 0=highest
 const char *version_num = "v2.07";
 const int internal_version_num = 207;
 

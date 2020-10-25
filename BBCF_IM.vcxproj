@@ -37,6 +37,7 @@
     <ClCompile Include="src\network_manager.cpp" />
     <ClCompile Include="src\settings.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
+    <ClCompile Include="src\SteamApiWrapper\SteamControllerWrapper.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamFriendsWrapper.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamMatchmakingWrapper.cpp" />
     <ClCompile Include="src\SteamApiWrapper\SteamNetworkingWrapper.cpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="include\settings.h" />
     <ClInclude Include="include\gamestates_defines.h" />
     <ClInclude Include="include\stdafx.h" />
+    <ClInclude Include="include\SteamApiWrapper\SteamControllerWrapper.h" />
     <ClInclude Include="include\SteamApiWrapper\SteamFriendsWrapper.h" />
     <ClInclude Include="include\SteamApiWrapper\SteamMatchmakingWrapper.h" />
     <ClInclude Include="include\SteamApiWrapper\SteamNetworkingWrapper.h" />
